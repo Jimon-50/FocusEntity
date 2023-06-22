@@ -11,9 +11,28 @@ import RealityKit
 
 struct ContentView: View {
     var body: some View {
-        BasicARView().edgesIgnoringSafeArea(.all)
+        // BasicARView().edgesIgnoringSafeArea(.all)
         // Uncomment the next line for a more complex example
-//        ARViewContainer().edgesIgnoringSafeArea(.all)
+        //        ARViewContainer().edgesIgnoringSafeArea(.all)
+        // Uncomment the next line for testing AR sessions
+        ARSessionTestView()
+    }
+}
+
+struct ARSessionTestView: View {
+    @State var isShowingARView = false
+    var body: some View {
+        ZStack() {
+            if isShowingARView {
+                SessionARView().edgesIgnoringSafeArea(.all)
+            }
+            Button(action: {
+                isShowingARView.toggle()
+            }) {
+                Text(isShowingARView ? "Stop AR": "Start AR")
+                    .font(.title)
+            }
+        }
     }
 }
 
