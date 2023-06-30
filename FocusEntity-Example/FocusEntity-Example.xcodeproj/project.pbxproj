@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		278069E82A4C7C0F00068B55 /* Dice.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 278069E72A4C7C0F00068B55 /* Dice.usdz */; };
+		278069EA2A4D6F0700068B55 /* TestARSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278069E92A4D6F0700068B55 /* TestARSessionView.swift */; };
+		278069EC2A4DA75600068B55 /* DroneWhite.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 278069EB2A4DA75600068B55 /* DroneWhite.usdz */; };
 		279FB0B22A44747000A99612 /* SessionARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FB0B12A44747000A99612 /* SessionARView.swift */; };
 		F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D0231462A90028AAF1 /* AppDelegate.swift */; };
 		F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D2231462A90028AAF1 /* ContentView.swift */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		278069E72A4C7C0F00068B55 /* Dice.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Dice.usdz; sourceTree = "<group>"; };
+		278069E92A4D6F0700068B55 /* TestARSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestARSessionView.swift; sourceTree = "<group>"; };
+		278069EB2A4DA75600068B55 /* DroneWhite.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = DroneWhite.usdz; sourceTree = "<group>"; };
 		279FB0B12A44747000A99612 /* SessionARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionARView.swift; sourceTree = "<group>"; };
 		F301E0CD231462A90028AAF1 /* FocusEntity-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FocusEntity-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F301E0D0231462A90028AAF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,8 +73,11 @@
 			children = (
 				F301E0D0231462A90028AAF1 /* AppDelegate.swift */,
 				F301E0D2231462A90028AAF1 /* ContentView.swift */,
+				278069E72A4C7C0F00068B55 /* Dice.usdz */,
 				279FB0B12A44747000A99612 /* SessionARView.swift */,
 				F385E0D129E74E97007CF478 /* BasicARView.swift */,
+				278069EB2A4DA75600068B55 /* DroneWhite.usdz */,
+				278069E92A4D6F0700068B55 /* TestARSessionView.swift */,
 				F301E0E4231462D90028AAF1 /* FocusARView.swift */,
 				F301E0D6231462AB0028AAF1 /* Assets.xcassets */,
 				F301E0DB231462AB0028AAF1 /* LaunchScreen.storyboard */,
@@ -166,7 +175,9 @@
 			files = (
 				F301E0DD231462AB0028AAF1 /* LaunchScreen.storyboard in Resources */,
 				F301E0DA231462AB0028AAF1 /* Preview Assets.xcassets in Resources */,
+				278069E82A4C7C0F00068B55 /* Dice.usdz in Resources */,
 				F301E0D7231462AB0028AAF1 /* Assets.xcassets in Resources */,
+				278069EC2A4DA75600068B55 /* DroneWhite.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +192,7 @@
 				F385E0D229E74E97007CF478 /* BasicARView.swift in Sources */,
 				F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */,
 				F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */,
+				278069EA2A4D6F0700068B55 /* TestARSessionView.swift in Sources */,
 				F301E0E5231462D90028AAF1 /* FocusARView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
