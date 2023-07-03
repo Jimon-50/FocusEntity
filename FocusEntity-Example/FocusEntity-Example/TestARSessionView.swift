@@ -61,8 +61,9 @@ struct TestARSessionView: View {
                         //Registering for Thermal Change notifications
                         NotificationCenter.default.addObserver(forName: ProcessInfo.thermalStateDidChangeNotification, object: nil, queue: nil) { notification in
                             let state = ProcessInfo.processInfo.thermalState
-                            print("ProcessInfo.thermalStateDidChangeNotification state=\(state)")
-            
+                            let df = DateFormatter()
+                            df.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
+                            debugPrint("\(df.string(from: Date())) ProcessInfo.thermalStateDidChangeNotification state=\(state)")
                         }
                     }
                     .onDisappear() {
