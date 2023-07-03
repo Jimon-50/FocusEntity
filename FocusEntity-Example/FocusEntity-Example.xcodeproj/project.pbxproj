@@ -15,6 +15,9 @@
 		278069F22A4F300C00068B55 /* take-off.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 278069EF2A4F2F0100068B55 /* take-off.m4a */; };
 		279FB0B22A44747000A99612 /* SessionARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FB0B12A44747000A99612 /* SessionARView.swift */; };
 		27FAC2D92A52FC8A0013E815 /* DroneEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FAC2D82A52FC8A0013E815 /* DroneEntity.swift */; };
+		27FAC2DC2A5304A10013E815 /* SCNRecorder in Frameworks */ = {isa = PBXBuildFile; productRef = 27FAC2DB2A5304A10013E815 /* SCNRecorder */; };
+		27FAC2DF2A5305C60013E815 /* ARView+SelfSceneRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FAC2DD2A5305C60013E815 /* ARView+SelfSceneRecordable.swift */; };
+		27FAC2E02A5305C60013E815 /* ARView+MetalRecordable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FAC2DE2A5305C60013E815 /* ARView+MetalRecordable.swift */; };
 		F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D0231462A90028AAF1 /* AppDelegate.swift */; };
 		F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D2231462A90028AAF1 /* ContentView.swift */; };
 		F301E0D7231462AB0028AAF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F301E0D6231462AB0028AAF1 /* Assets.xcassets */; };
@@ -34,6 +37,8 @@
 		278069F02A4F2F1700068B55 /* land.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = land.m4a; sourceTree = "<group>"; };
 		279FB0B12A44747000A99612 /* SessionARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionARView.swift; sourceTree = "<group>"; };
 		27FAC2D82A52FC8A0013E815 /* DroneEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneEntity.swift; sourceTree = "<group>"; };
+		27FAC2DD2A5305C60013E815 /* ARView+SelfSceneRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARView+SelfSceneRecordable.swift"; sourceTree = "<group>"; };
+		27FAC2DE2A5305C60013E815 /* ARView+MetalRecordable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ARView+MetalRecordable.swift"; sourceTree = "<group>"; };
 		F301E0CD231462A90028AAF1 /* FocusEntity-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FocusEntity-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F301E0D0231462A90028AAF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F301E0D2231462A90028AAF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F339DB65275013C700D9A2B2 /* FocusEntity in Frameworks */,
+				27FAC2DC2A5304A10013E815 /* SCNRecorder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +87,8 @@
 			children = (
 				F301E0D0231462A90028AAF1 /* AppDelegate.swift */,
 				F301E0D2231462A90028AAF1 /* ContentView.swift */,
+				27FAC2DE2A5305C60013E815 /* ARView+MetalRecordable.swift */,
+				27FAC2DD2A5305C60013E815 /* ARView+SelfSceneRecordable.swift */,
 				278069E72A4C7C0F00068B55 /* Dice.usdz */,
 				279FB0B12A44747000A99612 /* SessionARView.swift */,
 				F385E0D129E74E97007CF478 /* BasicARView.swift */,
@@ -140,6 +148,7 @@
 			name = "FocusEntity-Example";
 			packageProductDependencies = (
 				F339DB64275013C700D9A2B2 /* FocusEntity */,
+				27FAC2DB2A5304A10013E815 /* SCNRecorder */,
 			);
 			productName = "FocusEntity-Example";
 			productReference = F301E0CD231462A90028AAF1 /* FocusEntity-Example.app */;
@@ -170,6 +179,7 @@
 			);
 			mainGroup = F301E0C4231462A90028AAF1;
 			packageReferences = (
+				27FAC2DA2A5304A10013E815 /* XCRemoteSwiftPackageReference "SCNRecorder" */,
 			);
 			productRefGroup = F301E0CE231462A90028AAF1 /* Products */;
 			projectDirPath = "";
@@ -204,9 +214,11 @@
 			files = (
 				279FB0B22A44747000A99612 /* SessionARView.swift in Sources */,
 				27FAC2D92A52FC8A0013E815 /* DroneEntity.swift in Sources */,
+				27FAC2DF2A5305C60013E815 /* ARView+SelfSceneRecordable.swift in Sources */,
 				F385E0D229E74E97007CF478 /* BasicARView.swift in Sources */,
 				F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */,
 				F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */,
+				27FAC2E02A5305C60013E815 /* ARView+MetalRecordable.swift in Sources */,
 				278069EA2A4D6F0700068B55 /* TestARSessionView.swift in Sources */,
 				278069EE2A4F25D000068B55 /* ExperienceNoObject.rcproject in Sources */,
 				F301E0E5231462D90028AAF1 /* FocusARView.swift in Sources */,
@@ -404,7 +416,23 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		27FAC2DA2A5304A10013E815 /* XCRemoteSwiftPackageReference "SCNRecorder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gorastudio-ceo/SCNRecorder";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		27FAC2DB2A5304A10013E815 /* SCNRecorder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 27FAC2DA2A5304A10013E815 /* XCRemoteSwiftPackageReference "SCNRecorder" */;
+			productName = SCNRecorder;
+		};
 		F339DB64275013C700D9A2B2 /* FocusEntity */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FocusEntity;

@@ -9,6 +9,8 @@ import FocusEntity
 import ARKit
 import Combine
 
+import SCNRecorder
+
 // This is based on the article https://www.ralfebert.com/ios/realitykit-dice-tutorial/
 
 struct ARSessionView: UIViewRepresentable {
@@ -22,6 +24,8 @@ struct ARSessionView: UIViewRepresentable {
         // arView.debugOptions = [.showAnchorOrigins, .showPhysics]
         
         arView.automaticallyConfigureSession = false
+        
+        arView.prepareForRecording()  // SCNRecorder
         
         let session = arView.session
 
@@ -67,12 +71,44 @@ struct ARSessionView: UIViewRepresentable {
         var prevCameraFrameTimestamp: Double = 0.0
         var cameraFramePerSec: Int = 0
         var cameraPrevFps: Double = 0.0
+        var isRecording = false
         
         init(autoStartSec: Int = 0) {
             super.init()
             self.autoStartSec = autoStartSec
         }
         
+        func startRecording() {
+            guard let view = self.view else { return }
+            self.isRecording = true
+            do {
+                let videoRecording = try view.startVideoRecording()
+                
+                videoRecording.$duration.observe(on: .main) {
+                    let timeStamp = Int($0)    // second
+                    debugPrint("recording timeStamp=\(timeStamp)")
+                }
+                
+                videoRecording.$state.observe(on: .main) {
+                    let state = $0
+                    switch state {
+                    case  .failed(let error):
+                        debugPrint("video recording failed: error=\(error)")
+                        view.cancelVideoRecording()
+                        self.isRecording = false
+                    default:
+                        break
+                    }
+                }
+            } catch {
+                debugPrint("video recording catch: error=\(error)")
+            }
+        }
+        func finishRecording(handler: @escaping (URL) -> Void) {
+            guard let view = self.view else { return }
+            isRecording = false
+            view.finishVideoRecording(completionHandler: { handler($0.url) })
+        }
         func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
             guard let view = self.view else { return }
             // debugPrint("Anchors added to the scene: ", anchors)
@@ -155,6 +191,8 @@ struct ARSessionView: UIViewRepresentable {
                 directionalLight.look(at: .zero, from: lightAnchor.position, relativeTo: nil)
                 lightAnchor.addChild(directionalLight)
                 view.scene.addAnchor(lightAnchor)
+                
+                self.startRecording()   // This will start to print timestamp
                 
                 if self.myTimer == nil {
                     // start
