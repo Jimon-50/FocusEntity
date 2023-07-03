@@ -55,7 +55,7 @@ struct ARSessionView: UIViewRepresentable {
         var autoStartSec: Int = 0
         weak var view: ARView?
         var focusEntity: FocusEntity?
-        var entity: Entity?
+        var entity: DroneEntity?
         var tableEntity: Entity?
         var anchorEntity: AnchorEntity? = nil
         private var homePosition: SIMD3<Float> = .zero
@@ -64,12 +64,6 @@ struct ARSessionView: UIViewRepresentable {
         private var myTimer: Timer? = nil
         private var direction: CGFloat = 1.0
         private var secPerFrame: CGFloat = 1/30.0
-        var takeoffAudioPlaybackController: AudioPlaybackController? = nil
-        var landAudioPlaybackController: AudioPlaybackController? = nil
-        var takeoffAudioResource: AudioResource? = nil
-        var landAudioResource: AudioResource? = nil
-        let normalAudioGain: AudioPlaybackController.Decibel = -10
-        let muteAudioGain: AudioPlaybackController.Decibel = -100
         var prevCameraFrameTimestamp: Double = 0.0
         var cameraFramePerSec: Int = 0
         var cameraPrevFps: Double = 0.0
@@ -77,8 +71,6 @@ struct ARSessionView: UIViewRepresentable {
         init(autoStartSec: Int = 0) {
             super.init()
             self.autoStartSec = autoStartSec
-            
-            self.loadAudioResouces()
         }
         
         func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
@@ -136,10 +128,9 @@ struct ARSessionView: UIViewRepresentable {
                 self.anchorEntity = anchorEntity
                 
                 self.homePosition = focusEntity.position
-                let entity = createEntity(size: 0.05, position: focusEntity.position)
+                let entity = DroneEntity(droneAssetName: "DroneWhite", position: self.homePosition)
                 anchorEntity.addChild(entity)
                 self.entity = entity
-                self.setEntityPosition(position: self.homePosition)
             
                 let tableEntity = createTable(size: 0.5, position: focusEntity.position)
                 anchorEntity.addChild(tableEntity)
@@ -172,76 +163,23 @@ struct ARSessionView: UIViewRepresentable {
                         [weak self]
                         _ in
                         guard let `self` = self else { return }
+                        guard let entity = self.entity else { return }
                         
-                        var entityPosition = self.getEntityPosition()
+                        var entityPosition = entity.getPosition()
                         if entityPosition.y <= self.homePosition.y {
                             // takeoff
-                            self.takeOff()
+                            entity.takeOff()
                             self.direction = 1
                         } else if entityPosition.y >= self.homePosition.y + 0.5 { // 50 cm
                             // land
-                            self.landing()
+                            entity.landing()
                             self.direction = -1.0
                         }
                         entityPosition.y += Float(self.direction * 1.0/30.0)      // 1m/s
-                        self.setEntityPosition(position: entityPosition)
+                        entity.setPosition(position: entityPosition)
                     }
                 }
             }
-        }
-        
-        func createEntity(size: Float, position: SIMD3<Float>) -> Entity {
-            do {
-                let droneEntity = try Entity.load(named: "DroneWhite")
-                droneEntity.scale = [0.02, 0.02, 0.02]
-                
-                droneEntity.availableAnimations.forEach {
-                    droneEntity.playAnimation($0.repeat(duration: .infinity),
-                                              transitionDuration: 0,
-                                              startsPaused: false)       // start imediately
-                }
-                
-                let bbox = droneEntity.visualBounds(recursive: true, relativeTo: entity, excludeInactive: false)
-                let width = (bbox.max.x - bbox.min.x)
-                let height = (bbox.max.y - bbox.min.y)
-                self.droneOffsetY = (height*droneEntity.scale.y)/2 // place on the top the pad
-                
-                self.setEntityPosition(position: position)
-            
-                return droneEntity
-            } catch {
-                fatalError("Cannot the load the entity model")
-            }
-        }
-        
-        func setEntityPosition(position: simd_float3, orientation: simd_quatf! = nil) {
-            guard let entity = self.entity else {return}
-            
-            var entity_orientation: simd_quatf =  entity.orientation
-            // if orientaton is nil, the drone does not change the orientation
-            if orientation != nil {
-                let radians = 90 * Float.pi / 180.0
-                entity_orientation = orientation * simd_quatf(angle: radians, axis: SIMD3<Float>(0,1,0))        // This makes Drone facing the camera since the drone model faces x-axis
-            }
-            let entityPositionY = position.y + droneOffsetY
-            let translation = SIMD3<Float>(position.x,
-                                           entityPositionY,
-                                           position.z)
-            
-            entity.move(to: Transform(scale: entity.scale,
-                                      rotation: entity_orientation,
-                                      translation: translation),
-                        relativeTo: nil)
-        }
-        
-        func getEntityPosition() -> simd_float3 {
-            guard let entity = self.entity else {return simd_make_float3(0, 0, 0)}
-            
-            var dronePosition = entity.position
-            
-            dronePosition.y -= droneOffsetY
-            
-            return dronePosition
         }
         
         /*
@@ -277,89 +215,7 @@ struct ARSessionView: UIViewRepresentable {
             return planeEntity
         }
         
-        func loadAudioResouces() {
-            do {
-                self.takeoffAudioResource = try AudioFileResource.load(named: "take-off.m4a",
-                                                                       in: nil,
-                                                                       inputMode:.spatial,
-                                                                       loadingStrategy: .preload,
-                                                                       shouldLoop: false)
-                
-                self.landAudioResource = try AudioFileResource.load(named: "land.m4a",
-                                                                    in: nil,
-                                                                    inputMode: .spatial,
-                                                                    loadingStrategy: .preload,
-                                                                    shouldLoop: false)
-                
-            } catch {
-                fatalError("Cannot load audio resouces")
-            }
-        }
-        
-        func loadAudioResoucesAsync() {
-            var cancellable: AnyCancellable? = nil
-            cancellable = AudioFileResource.loadAsync(named: "take-off.m4a",
-                                                      in: nil,
-                                                      inputMode:.nonSpatial,
-                                                      loadingStrategy: .preload,
-                                                      shouldLoop: false)
-            .sink(receiveCompletion: { error in
-                print("audio resource unexpected error: \(error)")
-                cancellable?.cancel()
-            }, receiveValue: { resouce in
-                self.takeoffAudioResource = resouce
-                cancellable?.cancel()
-            })
-            var cancellable3: AnyCancellable? = nil
-            cancellable3 = AudioFileResource.loadAsync(named: "land.m4a",
-                                                       in: nil,
-                                                       inputMode:.nonSpatial,
-                                                       loadingStrategy: .preload,
-                                                       shouldLoop: false)
-            .sink(receiveCompletion: { error in
-                print("audio resource unexpected error: \(error)")
-                cancellable3?.cancel()
-            }, receiveValue: { resouce in
-                self.landAudioResource = resouce
-                cancellable3?.cancel()
-            })
-        }
-        
-        func takeOff() {
-            guard let entity = self.entity else {return}
-            
-            entity.stopAllAudio()     // just in case landing audio is not yet stopped
 
-            if let takeoffAudioResource = self.takeoffAudioResource {
-                self.takeoffAudioPlaybackController = entity.prepareAudio(takeoffAudioResource)
-                if let player = self.takeoffAudioPlaybackController {
-                    player.fade(to: self.muteAudioGain, duration: 0)
-                    player.play()
-                    player.fade(to: self.normalAudioGain, duration: 0.1)
-                }
-            }
-            
-        }
-        
-        func landing() {
-            guard let entity = self.entity else {return}
-            
-            if let landAudioResource = self.landAudioResource {
-                self.landAudioPlaybackController = entity.prepareAudio(landAudioResource)
-                if let player = self.landAudioPlaybackController  {
-                    player.fade(to: self.muteAudioGain, duration: 0)
-                    player.play()
-                    player.fade(to: self.normalAudioGain, duration: 0.1)
-                }
-            }
-        
-            if let player =  self.takeoffAudioPlaybackController  {
-                let duration = 0.2
-                DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                    player.stop()  // stop takeoff sound
-                }
-            }
-        }
     }
 }
 

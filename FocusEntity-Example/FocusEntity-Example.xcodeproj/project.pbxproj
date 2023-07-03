@@ -14,6 +14,7 @@
 		278069F12A4F300A00068B55 /* land.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 278069F02A4F2F1700068B55 /* land.m4a */; };
 		278069F22A4F300C00068B55 /* take-off.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 278069EF2A4F2F0100068B55 /* take-off.m4a */; };
 		279FB0B22A44747000A99612 /* SessionARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279FB0B12A44747000A99612 /* SessionARView.swift */; };
+		27FAC2D92A52FC8A0013E815 /* DroneEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FAC2D82A52FC8A0013E815 /* DroneEntity.swift */; };
 		F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D0231462A90028AAF1 /* AppDelegate.swift */; };
 		F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F301E0D2231462A90028AAF1 /* ContentView.swift */; };
 		F301E0D7231462AB0028AAF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F301E0D6231462AB0028AAF1 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		278069EF2A4F2F0100068B55 /* take-off.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "take-off.m4a"; sourceTree = "<group>"; };
 		278069F02A4F2F1700068B55 /* land.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = land.m4a; sourceTree = "<group>"; };
 		279FB0B12A44747000A99612 /* SessionARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionARView.swift; sourceTree = "<group>"; };
+		27FAC2D82A52FC8A0013E815 /* DroneEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneEntity.swift; sourceTree = "<group>"; };
 		F301E0CD231462A90028AAF1 /* FocusEntity-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "FocusEntity-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F301E0D0231462A90028AAF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F301E0D2231462A90028AAF1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				278069E72A4C7C0F00068B55 /* Dice.usdz */,
 				279FB0B12A44747000A99612 /* SessionARView.swift */,
 				F385E0D129E74E97007CF478 /* BasicARView.swift */,
+				27FAC2D82A52FC8A0013E815 /* DroneEntity.swift */,
 				278069EB2A4DA75600068B55 /* DroneWhite.usdz */,
 				278069F02A4F2F1700068B55 /* land.m4a */,
 				278069EF2A4F2F0100068B55 /* take-off.m4a */,
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				279FB0B22A44747000A99612 /* SessionARView.swift in Sources */,
+				27FAC2D92A52FC8A0013E815 /* DroneEntity.swift in Sources */,
 				F385E0D229E74E97007CF478 /* BasicARView.swift in Sources */,
 				F301E0D3231462A90028AAF1 /* ContentView.swift in Sources */,
 				F301E0D1231462A90028AAF1 /* AppDelegate.swift in Sources */,
